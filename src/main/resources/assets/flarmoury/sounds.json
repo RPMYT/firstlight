@@ -1,0 +1,9 @@
+{
+  "frenzy_fire": {
+    "sounds": [
+      {
+        "name": "flarmoury:guns/frenzy_fire"
+      }
+    ]
+  }
+}
