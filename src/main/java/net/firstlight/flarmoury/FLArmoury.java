@@ -2,6 +2,7 @@ package net.firstlight.flarmoury;
 
 import net.firstlight.flarmoury.entity.FlaBulletEntity;
 import net.firstlight.flarmoury.item.FlaItems;
+import net.firstlight.flarmoury.network.AnimationPacket;
 import net.firstlight.flarmoury.network.ShootPacket;
 import net.minecraft.item.Item;
 import net.minecraft.util.CooldownTracker;
@@ -41,6 +42,7 @@ public class FLArmoury {
     public void preInit(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
         NETWRAPPER.registerMessage(ShootPacket.Handler.class, ShootPacket.class, 0, Side.SERVER);
+        NETWRAPPER.registerMessage(AnimationPacket.Handler.class, AnimationPacket.class, 1, Side.CLIENT);
     }
 
     @EventHandler

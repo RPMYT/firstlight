@@ -24,7 +24,7 @@ public class FlaFrenzyItem extends FlaGunItem implements IAnimatable {
     }
 
     @Override
-    public String fireAnimationName() {
-        return "frenzy_fire";
+    public String getName() {
+        return "rfp3_frenzy";
     }
 }
