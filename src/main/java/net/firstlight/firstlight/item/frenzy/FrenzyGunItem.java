@@ -1,16 +1,16 @@
-package net.firstlight.flarmoury.item.weapon.frenzy;
+package net.firstlight.firstlight.item.frenzy;
 
-import net.firstlight.flarmoury.FLArmoury;
-import net.firstlight.flarmoury.client.FlaSounds;
-import net.firstlight.flarmoury.item.weapon.FlaGunItem;
+import net.firstlight.firstlight.Firstlight;
+import net.firstlight.firstlight.client.FirstlightArmourySounds;
+import net.firstlight.firstlight.item.GunItem;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class FlaFrenzyItem extends FlaGunItem implements IAnimatable {
-    public FlaFrenzyItem() {
-        super(new ResourceLocation(FLArmoury.MODID, "rfp3_frenzy"), 4, 20, 1F, true, false, FlaSounds.FRENZY_FIRE);
+public class FrenzyGunItem extends GunItem implements IAnimatable {
+    public FrenzyGunItem() {
+        super(new ResourceLocation(Firstlight.MODID, "rfp3_frenzy"), 4, 20, 1F, true, false, FirstlightArmourySounds.FRENZY_FIRE);
     }
 
     @Override

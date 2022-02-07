@@ -1,16 +1,21 @@
-[
 {
-  "modid": "flarmoury",
-  "name": "Firstlight Armoury",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["Prismatic"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "modListVersion": 2,
+  "modList": [
+    {
+      "modid": "firstlight",
+      "name": "Firstlight",
+      "description": "The Firstlight mod collection.",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "",
+      "updateUrl": "",
+      "authorList": [
+        "Prismatic"
+      ],
+      "credits": "",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
+  ]
 }
-]

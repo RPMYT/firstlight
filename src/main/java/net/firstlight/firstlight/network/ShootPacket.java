@@ -1,7 +1,7 @@
-package net.firstlight.flarmoury.network;
+package net.firstlight.firstlight.network;
 
 import io.netty.buffer.ByteBuf;
-import net.firstlight.flarmoury.item.weapon.FlaGun;
+import net.firstlight.firstlight.item.Gun;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,11 +41,11 @@ public final class ShootPacket implements IMessage {
             player.getServerWorld().addScheduledTask(() -> {
                 ItemStack stack = player.getHeldItem(message.hand);
                 Item item = stack.getItem();
-                if (item instanceof FlaGun) {
-                    ((FlaGun) item).fire(player, stack);
+                if (item instanceof Gun) {
+                    ((Gun) item).fire(player, stack);
                     if (message.hand == EnumHand.OFF_HAND && player.getHeldItemMainhand().getItem() == item) {
                         player.getCooldownTracker().removeCooldown(item);
-                        ((FlaGun) item).fire(player, stack);
+                        ((Gun) item).fire(player, stack);
                     }
                 }
             });

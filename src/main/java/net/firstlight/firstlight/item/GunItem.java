@@ -1,9 +1,8 @@
-package net.firstlight.flarmoury.item.weapon;
+package net.firstlight.firstlight.item;
 
-import net.firstlight.flarmoury.FLArmoury;
-
-import net.firstlight.flarmoury.entity.FlaBulletEntity;
-import net.firstlight.flarmoury.network.AnimationPacket;
+import net.firstlight.firstlight.Firstlight;
+import net.firstlight.firstlight.entity.BulletEntity;
+import net.firstlight.firstlight.network.AnimationPacket;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +27,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 @SuppressWarnings({"NullableProblems", "rawtypes"})
-public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
+public abstract class GunItem extends Item implements Gun, IAnimatable {
     public static final AnimationBuilder IDLE_ANIMATION = new AnimationBuilder().addAnimation("Idle");
     public static final AnimationBuilder SHOOTING_ANIMATION = new AnimationBuilder().addAnimation("Shooting");
     public static final AnimationBuilder RELOADING_ANIMATION = new AnimationBuilder().addAnimation("Reloading");
@@ -42,7 +41,7 @@ public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
 
     public AnimationFactory factory = new AnimationFactory(this);
 
-    public FlaGunItem(ResourceLocation name, int shots, int fireRate, float damage, boolean canDuelWield, boolean isTwoHanded, SoundEvent fireSound) {
+    public GunItem(ResourceLocation name, int shots, int fireRate, float damage, boolean canDuelWield, boolean isTwoHanded, SoundEvent fireSound) {
         this.setRegistryName(name);
         this.setUnlocalizedName(name.getResourcePath());
 
@@ -65,11 +64,11 @@ public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
         World world = entity.getEntityWorld();
 
         if (!world.isRemote) {
-            CooldownTracker tracker = (entity instanceof EntityPlayer ? ((EntityPlayer) entity).getCooldownTracker() : FLArmoury.GCT);
+            CooldownTracker tracker = (entity instanceof EntityPlayer ? ((EntityPlayer) entity).getCooldownTracker() : Firstlight.GCT);
             if (!tracker.hasCooldown(this)) {
                 int fired;
                 for (fired = 1; fired <= this.shots; fired++) {
-                    FlaBulletEntity bullet = new FlaBulletEntity(world, entity, this.damage);
+                    BulletEntity bullet = new BulletEntity(world, entity, this.damage);
                     bullet.shoot(entity, entity.rotationPitch, entity.rotationYaw, 0.0F, 10.0F, 0.0F);
                     world.spawnEntity(bullet);
                 }
@@ -85,7 +84,7 @@ public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
                 }
 
                 if (entity instanceof EntityPlayerMP) {
-                    FLArmoury.NETWRAPPER.sendTo(new AnimationPacket(stack, 0), (EntityPlayerMP) entity);
+                    Firstlight.NETWRAPPER.sendTo(new AnimationPacket(stack, 0), (EntityPlayerMP) entity);
                 }
             }
         }
@@ -122,7 +121,7 @@ public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
             return;
         }
 
-        CooldownTracker tracker = FLArmoury.GCT;
+        CooldownTracker tracker = Firstlight.GCT;
         int ticks = (int) tracker.getCooldown(this, 0.0F);
         if (ticks > 0) {
             tracker.setCooldown(this, --ticks);
@@ -131,7 +130,7 @@ public abstract class FlaGunItem extends Item implements FlaGun, IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        AnimationController<FlaGunItem> controller = new AnimationController<>(this, this.getName(), 1, (event -> PlayState.CONTINUE));
+        AnimationController<GunItem> controller = new AnimationController<>(this, this.getName(), 1, (event -> PlayState.CONTINUE));
         controller.easingType = EasingType.NONE;
         data.addAnimationController(controller);
     }

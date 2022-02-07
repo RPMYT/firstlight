@@ -1,9 +1,7 @@
-package net.firstlight.flarmoury.network;
+package net.firstlight.firstlight.network;
 
 import io.netty.buffer.ByteBuf;
-import net.firstlight.flarmoury.item.weapon.FlaGun;
-import net.firstlight.flarmoury.item.weapon.FlaGunItem;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.firstlight.firstlight.item.GunItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -38,24 +36,25 @@ public final class AnimationPacket implements IMessage {
         buf.writeInt(this.animation);
     }
 
+    @SuppressWarnings("rawtypes")
     public static final class Handler implements IMessageHandler<AnimationPacket, IMessage> {
         @Override
         public IMessage onMessage(AnimationPacket message, MessageContext ctx) {
             ItemStack stack = message.stack;
             Item item = stack.getItem();
-            if (item instanceof FlaGunItem) {
-                AnimationController controller = GeckoLibUtil.getControllerForStack(((FlaGunItem) item).factory, stack, ((FlaGunItem) item).getName());
+            if (item instanceof GunItem) {
+                AnimationController controller = GeckoLibUtil.getControllerForStack(((GunItem) item).factory, stack, ((GunItem) item).getName());
 
                 switch (message.animation) {
                     case 0:
-                        controller.setAnimation(FlaGunItem.SHOOTING_ANIMATION);
+                        controller.setAnimation(GunItem.SHOOTING_ANIMATION);
                         break;
                     case 1:
-                        controller.setAnimation(FlaGunItem.RELOADING_ANIMATION);
+                        controller.setAnimation(GunItem.RELOADING_ANIMATION);
                         break;
                     case 2:
                     default:
-                        controller.setAnimation(FlaGunItem.IDLE_ANIMATION);
+                        controller.setAnimation(GunItem.IDLE_ANIMATION);
                         break;
                 }
 

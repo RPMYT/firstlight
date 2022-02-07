@@ -1,4 +1,4 @@
-package net.firstlight.flarmoury.entity;
+package net.firstlight.firstlight.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,10 +9,10 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class FlaBulletEntity extends EntityArrow {
+public class BulletEntity extends EntityArrow {
     private float damage;
 
-    public FlaBulletEntity(World worldIn, EntityLivingBase shooter, float damage) {
+    public BulletEntity(World worldIn, EntityLivingBase shooter, float damage) {
         super(worldIn, shooter);
 
         this.damage = damage;
@@ -20,7 +20,7 @@ public class FlaBulletEntity extends EntityArrow {
         this.setNoGravity(true);
     }
 
-    public FlaBulletEntity(World world) {
+    public BulletEntity(World world) {
         super(world);
     }
 
