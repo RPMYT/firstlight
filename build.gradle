@@ -72,7 +72,7 @@ dependencies {
     implementation fg.deobf('curse.maven:obfuscate-289380:2912288')
     implementation fg.deobf('software.bernie.geckolib:forge-1.12.2-geckolib:3.0.21')
 
-    embed('org.spongepowered:mixin:0.8.3-SNAPSHOT') {
+    embed('org.spongepowered:mixin:0.8') {
         exclude module: 'guava'
         exclude module: 'commons-io'
         exclude module: 'gson'
@@ -83,6 +83,7 @@ dependencies {
 
 mixin {
     config 'firstlight.mixins.json'
+    disableAnnotationProcessorCheck()
 }
 
 processResources {
@@ -119,7 +120,7 @@ jar {
             "Implementation-Vendor" :"firstlight",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "FMLCorePlugin": "net.firstlight.firstlight.core.FirstlightMixinLoader",
-            "FMLCorePluginContainsFMLMod": "false",
+            "FMLCorePluginContainsFMLMod": "true",
             "ForceLoadAsMod": "true",
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
             "TweakOrder": "0",
