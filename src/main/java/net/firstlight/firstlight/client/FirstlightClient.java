@@ -1,7 +1,7 @@
 package net.firstlight.firstlight.client;
 
 import net.firstlight.firstlight.Firstlight;
-import net.firstlight.firstlight.item.FirstlightArmouryItems;
+import net.firstlight.firstlight.item.FirstlightItems;
 import net.firstlight.firstlight.item.Gun;
 import net.firstlight.firstlight.item.frenzy.FrenzyGunRenderer;
 import net.firstlight.firstlight.network.ShootPacket;
@@ -68,9 +68,9 @@ public class FirstlightClient {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event) {
-        ModelLoader.setCustomModelResourceLocation(FirstlightArmouryItems.RFP3_FRENZY, 0, new ModelResourceLocation(Firstlight.MODID + ":rfp3_frenzy", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(FirstlightItems.RFP3_FRENZY, 0, new ModelResourceLocation(Firstlight.MODID + ":rfp3_frenzy", "inventory"));
 
-        FirstlightArmouryItems.RFP3_FRENZY.setTileEntityItemStackRenderer(new FrenzyGunRenderer());
+        FirstlightItems.RFP3_FRENZY.setTileEntityItemStackRenderer(new FrenzyGunRenderer());
     }
 
     @SubscribeEvent

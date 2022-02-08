@@ -1,0 +1,7 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "net.firstlight.firstlight.mixin",
+  "mixins": [
+    "ExternalResourceEnablementMixins$EREM_GeoModelLoader"
+  ]
+}
