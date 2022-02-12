@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public interface Gun {
     void fire(EntityLivingBase entity, ItemStack stack);
+    void reload(EntityLivingBase entityLivingBase, ItemStack stack);
     boolean isTwoHanded();
     boolean canDualWield();
     String getName();

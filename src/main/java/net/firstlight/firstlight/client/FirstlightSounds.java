@@ -10,5 +10,9 @@ public class FirstlightSounds {
         return new SoundEvent(location).setRegistryName(location);
     }
 
+    public static final SoundEvent FRENZY_RELOAD = create("frenzy_reload");
+    public static final SoundEvent REAPER_RELOAD = create("reaper_reload");
+
     public static final SoundEvent FRENZY_FIRE = create("frenzy_fire");
+    public static final SoundEvent REAPER_FIRE = create("reaper_fire");
 }

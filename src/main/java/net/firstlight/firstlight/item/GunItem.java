@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -27,24 +26,28 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 @SuppressWarnings({"NullableProblems", "rawtypes"})
-public abstract class GunItem extends Item implements Gun, IAnimatable {
+public class GunItem extends Item implements Gun, IAnimatable {
     public static final AnimationBuilder IDLE_ANIMATION = new AnimationBuilder().addAnimation("Idle");
     public static final AnimationBuilder SHOOTING_ANIMATION = new AnimationBuilder().addAnimation("Shooting");
     public static final AnimationBuilder RELOADING_ANIMATION = new AnimationBuilder().addAnimation("Reloading");
 
     private final int shots;
+    private final String name;
     private final int fireRate;
     private final float damage;
     private final boolean isTwoHanded;
     private final boolean canDuelWield;
     private final SoundEvent fireSound;
+    private final SoundEvent reloadSound;
 
     public AnimationFactory factory = new AnimationFactory(this);
 
-    public GunItem(ResourceLocation name, int shots, int fireRate, float damage, boolean canDuelWield, boolean isTwoHanded, SoundEvent fireSound) {
-        this.setRegistryName(name);
-        this.setUnlocalizedName(name.getResourcePath());
+    public GunItem(String name, int shots, int fireRate, float damage, boolean canDuelWield, boolean isTwoHanded, SoundEvent fireSound, SoundEvent reloadSound) {
+        this.reloadSound = reloadSound;
+        this.setRegistryName("firstlight:" + this.getName());
+        this.setUnlocalizedName("item.firstlight." + this.getName());
 
+        this.name = name;
         this.shots = shots;
         this.damage = damage;
         this.fireRate = fireRate;
@@ -57,6 +60,11 @@ public abstract class GunItem extends Item implements Gun, IAnimatable {
     @Override
     public boolean onEntitySwing(EntityLivingBase p_onEntitySwing_1_, ItemStack p_onEntitySwing_2_) {
         return true;
+    }
+
+    @Override
+    public void reload(EntityLivingBase entityLivingBase, ItemStack stack) {
+
     }
 
     @Override
@@ -133,5 +141,15 @@ public abstract class GunItem extends Item implements Gun, IAnimatable {
         AnimationController<GunItem> controller = new AnimationController<>(this, this.getName(), 1, (event -> PlayState.CONTINUE));
         controller.easingType = EasingType.NONE;
         data.addAnimationController(controller);
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

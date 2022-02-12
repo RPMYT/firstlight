@@ -5,23 +5,18 @@ buildscript {
             name 'FancyGradle'
             url 'https://gitlab.com/api/v4/projects/26758973/packages/maven'
         }
-        maven { url = "https://repo.spongepowered.org/maven" }
-        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
         classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
-        
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-/*
+
 apply plugin: 'wtf.gofancy.fancygradle'
 
 fancyGradle {
@@ -29,7 +24,6 @@ fancyGradle {
         resources
     }
 }
-*/
 
 minecraft {
     mappings channel: 'snapshot', version: '20171003-1.12'
@@ -62,44 +56,10 @@ repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
-configurations {
-    embed
-    compile.extendsFrom(embed)
-}
-
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
     implementation fg.deobf('curse.maven:obfuscate-289380:2912288')
     implementation fg.deobf('software.bernie.geckolib:forge-1.12.2-geckolib:3.0.21')
-
-    embed('org.spongepowered:mixin:0.8') {
-        exclude module: 'guava'
-        exclude module: 'commons-io'
-        exclude module: 'gson'
-    }
-
-    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
-}
-
-mixin {
-    config 'firstlight.mixins.json'
-    disableAnnotationProcessorCheck()
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.mcversion
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        expand 'version': project.version,
-                'mcversion': project.mcversion
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -118,13 +78,7 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${project.version}",
             "Implementation-Vendor" :"firstlight",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "FMLCorePlugin": "net.firstlight.firstlight.core.FirstlightMixinLoader",
-            "FMLCorePluginContainsFMLMod": "true",
-            "ForceLoadAsMod": "true",
-            "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-            "TweakOrder": "0",
-            "MixinConfigs": "firstlight.mixins.json"
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }

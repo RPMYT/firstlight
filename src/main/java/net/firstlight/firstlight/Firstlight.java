@@ -1,16 +1,12 @@
 package net.firstlight.firstlight;
 
-import net.firstlight.firstlight.client.model.FirstlightPlayerModel;
-import net.firstlight.firstlight.client.renderer.FirstlightPlayerRenderer;
 import net.firstlight.firstlight.entity.BulletEntity;
 import net.firstlight.firstlight.item.FirstlightItems;
 import net.firstlight.firstlight.network.AnimationPacket;
 import net.firstlight.firstlight.network.ShootPacket;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,20 +16,12 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.apache.commons.io.IOUtils;
 import software.bernie.geckolib3.GeckoLib;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 @Mod.EventBusSubscriber(modid = Firstlight.MODID)
 @Mod(modid = Firstlight.MODID, name = Firstlight.NAME, version = Firstlight.VERSION, dependencies = "required-after:geckolib3")
 public class Firstlight {
-    public static final String GECKOLIB_FILENAME = "geckolib-forge-1.12.2-3.0.21.jar";
 
     public static final CooldownTracker GCT = new CooldownTracker();
     public static final String VERSION = "1.0";
@@ -41,21 +29,8 @@ public class Firstlight {
     public static final String MODID = "firstlight";
     public static final SimpleNetworkWrapper NETWRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
-    private static File CONFIG_DIR;
-
     public Firstlight() {
         GeckoLib.initialize();
-    }
-
-    public static File getExternalResource(String name) {
-        System.out.println("LOADING EXTERNAL RESOURCE: " + name);
-        return new File(CONFIG_DIR.getAbsolutePath() + "/firstlight/resources/" + name );
-    }
-
-    @SuppressWarnings("deprecation")
-    public static String getExternalResourceContent(File resource) throws IOException {
-        InputStream stream = new FileInputStream(resource);
-        return IOUtils.toString(stream);
     }
 
     public static ResourceLocation getResource(String name, Resource type) {
@@ -64,13 +39,6 @@ public class Firstlight {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        CONFIG_DIR = event.getModConfigurationDirectory();
-        if (!CONFIG_DIR.exists()) {
-            boolean result = CONFIG_DIR.mkdirs();
-            if (!result) {
-                throw new RuntimeException("Cannot create config dir!!");
-            }
-        }
         Firstlight.NETWRAPPER.registerMessage(ShootPacket.Handler.class, ShootPacket.class, 0, Side.SERVER);
         Firstlight.NETWRAPPER.registerMessage(AnimationPacket.Handler.class, AnimationPacket.class, 1, Side.CLIENT);
     }
@@ -84,15 +52,5 @@ public class Firstlight {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         registry.register(FirstlightItems.RFP3_FRENZY);
-    }
-
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public static void overwritePlayerModel(RenderPlayerEvent.Pre event) {
-        event.setCanceled(true);
-        EntityPlayer player = event.getEntityPlayer();
-        FirstlightPlayerRenderer renderer = new FirstlightPlayerRenderer();
-        FirstlightPlayerModel model = (FirstlightPlayerModel) renderer.getGeoModelProvider();
-        renderer.render(model.getModel(model.getModelLocation(player)), player, 0, 1F, 1F, 1F, 1F);
     }
 }
